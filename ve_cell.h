@@ -1,7 +1,7 @@
 #ifndef VELLUM_VE_CELL_H
 #define VELLUM_VE_CELL_H
 
-#include "vellum.h"
+#include "ve_char.h"
 #include "ve_colour.h"
 
 /**
