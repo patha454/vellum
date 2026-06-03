@@ -1,12 +1,8 @@
-#ifndef VELLUM_LIBRARY_H
-#define VELLUM_LIBRARY_H
+#ifndef VELLUM_VE_CELL_H
+#define VELLUM_VE_CELL_H
 
+#include "vellum.h"
 #include "ve_colour.h"
-#include <uchar.h>
-
-/** An unstyled text character. */
-typedef char32_t ve_char_t;
-
 
 /**
  * Vellum representation of a single cell of console text.
@@ -25,4 +21,4 @@ struct VeCell {
     ve_colour_t background;
 };
 
-#endif // VELLUM_LIBRARY_H
+#endif
