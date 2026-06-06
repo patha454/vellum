@@ -41,11 +41,11 @@ struct VeFramebuffer {
  * \note The memory layout of cells within the framebuffer
  * is defined in \ref VeFramebuffer.
  *
- * @param framebuffer Framebuffer to query.
- * @param x X coordinate of the cell.
- * @param y Y coordinate of the cell
+ * \param framebuffer Framebuffer to query.
+ * \param x X coordinate of the cell.
+ * \param y Y coordinate of the cell
  *
- * @return Cell at (x, y) in the framebuffer, or null if:
+ * \return Cell at (x, y) in the framebuffer, or null if:
  *   - The coordinates are out of range.
  *   - The framebuffer is null or invalid.
  */
@@ -56,18 +56,18 @@ struct VeCell * veGetFramebufferCell(
 );
 
 /**
- * \brief Allocate a new Vellum framebuffer.
+ * \brief Allocate and initialize a new Vellum framebuffer.
  *
- * Performs a deep allocation of the framebuffer and its
- * underlying cell array.
+ * Create a mew framebuffer by allocating and initializing
+ * all required resources.
  *
- * @param width Width of the new framebuffer, in cells.
- * @param height Height of the new framebuffer, in cells.
+ * \param width Width of the new framebuffer, in cells.
+ * \param height Height of the new framebuffer, in cells.
  *
- * @return Newly allocated framebuffer, or null if
+ * \return Newly allocated framebuffer, or null if
  * allocation failed.
  */
-struct VeFramebuffer * veAllocateFramebuffer(
+struct VeFramebuffer * veCreateFramebuffer(
     size_t width,
     size_t height
 );
@@ -78,7 +78,7 @@ struct VeFramebuffer * veAllocateFramebuffer(
  * Performs a deep deallocation freeing both the
  * framebuffer and its underlying cell array.
  *
- * @param framebuffer Framebuffer to be deallocated. No
+ * \param framebuffer Framebuffer to be deallocated. No
  * action is taken if the framebuffer is null.
  */
 void veDeallocateFramebuffer(
