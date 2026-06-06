@@ -45,7 +45,10 @@ struct VeFramebuffer * veCreateFramebuffer(
     if (framebuffer == NULL) {
         return NULL;
     }
-    struct VeCell * cells = calloc(width * height , sizeof(struct VeCell));
+    struct VeCell * cells = calloc(
+        width * height,
+        sizeof(struct VeCell)
+    );
     if (cells == NULL) {
         free(framebuffer);
         return NULL;
