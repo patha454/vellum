@@ -23,10 +23,10 @@ typedef uint32_t ve_colour_t;
  *
  * \return Initialized Vellum colour.
  */
-static inline ve_colour_t veColour(
-    const uint8_t red,
-    const uint8_t green,
-    const uint8_t blue
-) { return (red << 16) | (green << 8) | blue; }
+static inline ve_colour_t veColour(const uint8_t red,
+    const uint8_t green, const uint8_t blue)
+{
+    return (red << 16) | (green << 8) | blue;
+}
 
-#endif //VELLUM_VE_COLOUR_H
+#endif // VELLUM_VE_COLOUR_H

@@ -6,4 +6,4 @@
 /** An unstyled text character. */
 typedef char32_t ve_char_t;
 
-#endif //VELLUM_VE_CHAR_H
+#endif // VELLUM_VE_CHAR_H

@@ -1,8 +1,9 @@
 #ifndef VELLUM_VE_FRAMEBUFFER_H
 #define VELLUM_VE_FRAMEBUFFER_H
 
-#include "ve_cell.h"
 #include <stddef.h>
+
+#include "ve_cell.h"
 
 /**
  * \brief Grid of "cells" which forms Vellum's framebuffer.
@@ -28,7 +29,7 @@ struct VeFramebuffer {
      * The framebuffer is a 2-dimensional array of cells (
      * width * height cells total.)
      */
-    struct VeCell * cells;
+    struct VeCell* cells;
 };
 
 /**
@@ -49,11 +50,9 @@ struct VeFramebuffer {
  *   - The coordinates are out of range.
  *   - The framebuffer is null or invalid.
  */
-struct VeCell * veGetFramebufferCell(
-    const struct VeFramebuffer * framebuffer,
-    size_t x,
-    size_t y
-);
+struct VeCell* veGetFramebufferCell(
+    const struct VeFramebuffer* framebuffer, size_t x,
+    size_t y);
 
 /**
  * \brief Allocate and initialize a new Vellum framebuffer.
@@ -70,10 +69,8 @@ struct VeCell * veGetFramebufferCell(
  * \return Newly allocated framebuffer, or null if
  * allocation failed.
  */
-struct VeFramebuffer * veCreateFramebuffer(
-    size_t width,
-    size_t height
-);
+struct VeFramebuffer* veCreateFramebuffer(
+    size_t width, size_t height);
 
 /**
  * \brief Destroy and deallocated a Vellum framebuffer.
@@ -85,7 +82,6 @@ struct VeFramebuffer * veCreateFramebuffer(
  * action is taken if the framebuffer is null.
  */
 void veDestroyFramebuffer(
-    struct VeFramebuffer * framebuffer
-);
+    struct VeFramebuffer* framebuffer);
 
-#endif //VELLUM_VE_FRAMEBUFFER_H
+#endif // VELLUM_VE_FRAMEBUFFER_H
