@@ -64,6 +64,9 @@ struct VeCell * veGetFramebufferCell(
  * \param width Width of the new framebuffer, in cells.
  * \param height Height of the new framebuffer, in cells.
  *
+ * \note Creating a framebuffer with the width or height
+ * set to zero is invalid and will return null.
+ *
  * \return Newly allocated framebuffer, or null if
  * allocation failed.
  */
@@ -73,15 +76,15 @@ struct VeFramebuffer * veCreateFramebuffer(
 );
 
 /**
- * \brief Deallocate a Vellum framebuffer.
+ * \brief Destroy and deallocated a Vellum framebuffer.
  *
- * Performs a deep deallocation freeing both the
- * framebuffer and its underlying cell array.
+ * Destroy a framebuffer by freeing and deallocating the
+ * resources it holds.
  *
  * \param framebuffer Framebuffer to be deallocated. No
  * action is taken if the framebuffer is null.
  */
-void veDeallocateFramebuffer(
+void veDestroyFramebuffer(
     struct VeFramebuffer * framebuffer
 );
 
