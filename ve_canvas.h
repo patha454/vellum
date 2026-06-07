@@ -9,10 +9,10 @@
  */
 struct VeCanvas {
     /** Buffer where the next frame is being written. */
-    struct VeFramebuffer * backBuffer;
+    struct VeFramebuffer* backBuffer;
 
     /** Buffer containing the previous frame displayed. */
-    struct VeFramebuffer * frontBuffer;
+    struct VeFramebuffer* frontBuffer;
 };
 
 /**
@@ -32,11 +32,8 @@ struct VeCanvas {
  * \return Newly allocated canvas, or NULL if allocation
  * or initialization fails.
  */
-struct VeCanvas * veCreateCanvas(
-    FILE * output,
-    size_t width,
-    size_t height
-);
+struct VeCanvas* veCreateCanvas(
+    FILE* output, size_t width, size_t height);
 
 /**
  * \brief Destroy a canvas, freeing all resources held by
@@ -45,14 +42,14 @@ struct VeCanvas * veCreateCanvas(
  * \param canvas Canvas to destroy. No action is taken if
  * the canvas is NULL.
  */
-void veDestroyCanvas(struct VeCanvas * canvas);
+void veDestroyCanvas(struct VeCanvas* canvas);
 
 /**
  * \brief Render staged content to the terminal.
  *
  * @param canvas Canvas to render.
  */
-void veDisplayCanvas(struct VeCanvas * canvas);
+void veDisplayCanvas(struct VeCanvas* canvas);
 
 /**
  * \brief Stage a character for rendering on the canvas.
@@ -66,11 +63,8 @@ void veDisplayCanvas(struct VeCanvas * canvas);
  * @param y Y coordinate of the character.
  * @param style Style to apply to the character.
  */
-void veStageCharacter(struct VeCanvas * canvas,
-    ve_char_t character,
-    size_t x,
-    size_t y,
-    struct VeStyle style
-);
+void veStageCharacter(struct VeCanvas* canvas,
+    ve_char_t character, size_t x, size_t y,
+    struct VeStyle style);
 
 #endif // VELLUM_VE_CANVAS_H
