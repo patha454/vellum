@@ -13,6 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install LLVM 22 Toolchain
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo add-apt-repository 'deb http://apt.llvm.org/ $(lsb_release -cs)-22 main' -y
+          sudo apt-get update
+          sudo apt-get install -y clang-format-22
+
       - name: Run clang-format lint
         run: |
           find src include -type f \( -name "*.c" -o -name "*.h" \) | xargs -r clang-format --dry-run --Werror
