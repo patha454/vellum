@@ -1,5 +1,5 @@
 /**
-* \file canvas.c
+ * \file canvas.c
  *
  * \brief Vellum canvas implemenation.
  *
