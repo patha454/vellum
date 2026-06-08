@@ -9,7 +9,7 @@ struct VeFramebuffer {
     /**
      * Interface to an implementation of a framebuffer.
      */
-    const struct VeFramebufferFunctions* const vtable;
+    const struct VeFramebufferBackend* const vtable;
 };
 
 /**
@@ -65,7 +65,7 @@ typedef struct VeCell* (*ve_framebuffer_get_cell_t)(
     const struct VeFramebuffer* framebuffer, size_t x,
     size_t y);
 
-struct VeFramebufferFunctions {
+struct VeFramebufferBackend {
     /**
      * Create a new instance of a framebuffer
      * implementation.
@@ -85,7 +85,15 @@ struct VeFramebufferFunctions {
     ve_framebuffer_get_cell_t get_cell;
 };
 
-extern const struct VeFramebufferFunctions
+extern const struct VeFramebufferBackend
     veDefaultFramebufferFunctions;
+
+static struct VeFramebuffer * veCreateFramebuffer(
+    const struct VeFramebufferBackend* vtable,
+    const size_t x, const size_t y
+    )
+{
+    return vtable->create(x, y);
+}
 
 #endif // VELLUM_VE_FRAMEBUFFER_H
