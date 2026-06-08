@@ -1,5 +1,5 @@
 /**
-* \file canvas.h
+ * \file canvas.h
  *
  * \brief Vellum style API.
  *

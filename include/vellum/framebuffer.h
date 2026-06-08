@@ -1,5 +1,5 @@
 /**
-* \file framebuffer.h
+ * \file framebuffer.h
  *
  * \brief Vellum framebuffer API.
  *
