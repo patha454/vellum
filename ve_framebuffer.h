@@ -9,7 +9,7 @@ struct VeFramebuffer {
     /**
      * Interface to an implementation of a framebuffer.
      */
-    const struct VeFramebufferBackend* const vtable;
+    const struct VeFramebufferBackend* const backend;
 };
 
 /**
@@ -28,6 +28,7 @@ struct VeFramebuffer {
  * allocation failed.
  */
 typedef struct VeFramebuffer* (*ve_framebuffer_create_t)(
+    const struct VeFramebufferBackend* backend,
     size_t width, size_t height);
 
 /**
@@ -86,14 +87,38 @@ struct VeFramebufferBackend {
 };
 
 extern const struct VeFramebufferBackend
-    veDefaultFramebufferFunctions;
+    veDefaultFramebufferBackend;
 
-static struct VeFramebuffer * veCreateFramebuffer(
-    const struct VeFramebufferBackend* vtable,
-    const size_t x, const size_t y
-    )
+static inline struct VeFramebuffer* veFramebufferCreate(
+    const struct VeFramebufferBackend* backend,
+    const size_t width, const size_t height)
 {
-    return vtable->create(x, y);
+    if (backend == NULL || backend->create == NULL) {
+        return NULL;
+    }
+    return backend->create(backend, width, height);
+}
+
+static inline void veFramebufferDestroy(
+    struct VeFramebuffer* framebuffer)
+{
+    if (framebuffer == NULL || framebuffer->backend == NULL
+        || framebuffer->backend->destroy == NULL) {
+        return;
+    }
+    framebuffer->backend->destroy(framebuffer);
+}
+
+static inline struct VeCell* veFramebufferGetCell(
+    const struct VeFramebuffer* framebuffer, size_t x,
+    size_t y)
+{
+    if (framebuffer == NULL || framebuffer->backend == NULL
+        || framebuffer->backend->get_cell == NULL) {
+        return NULL;
+    }
+    return framebuffer->backend->get_cell(
+        framebuffer, x, y);
 }
 
 #endif // VELLUM_VE_FRAMEBUFFER_H

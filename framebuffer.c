@@ -4,7 +4,7 @@
 #include "ve_framebuffer.h"
 
 struct VeDefaultFramebuffer {
-    const struct VeFramebufferBackend* vtable;
+    const struct VeFramebufferBackend* backend;
     size_t width;
     size_t height;
     struct VeCell* cells;
@@ -42,6 +42,7 @@ static bool isSizeUnsafe(
 }
 
 struct VeFramebuffer* veCreateDefaultFramebuffer(
+    const struct VeFramebufferBackend* backend,
     const size_t width, const size_t height)
 {
     if (isSizeUnsafe(width, height)) {
@@ -58,14 +59,15 @@ struct VeFramebuffer* veCreateDefaultFramebuffer(
         free(framebuffer);
         return NULL;
     }
-    framebuffer->vtable = &veDefaultFramebufferFunctions;
+    framebuffer->backend = backend;
     framebuffer->width = width;
     framebuffer->height = height;
     framebuffer->cells = cells;
     return (struct VeFramebuffer*)framebuffer;
 }
 
-void veDestroyDefaultFramebuffer(struct VeFramebuffer* framebuffer)
+void veDestroyDefaultFramebuffer(
+    struct VeFramebuffer* framebuffer)
 {
     if (framebuffer == NULL) {
         return;
@@ -93,11 +95,11 @@ struct VeCell* veGetDefaultFramebufferCell(
     if (x >= fb->width || y >= fb->height) {
         return NULL;
     }
-    return &fb->cells[y + x * fb->height];
+    return &fb->cells[x + y * fb->width];
 }
 
 const struct VeFramebufferBackend
-    veDefaultFramebufferFunctions = {
+    veDefaultFramebufferBackend = {
         .create = veCreateDefaultFramebuffer,
         .destroy = veDestroyDefaultFramebuffer,
         .get_cell = veGetDefaultFramebufferCell,
