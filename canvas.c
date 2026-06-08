@@ -13,13 +13,13 @@ struct VeCanvas* veCreateCanvas(
     if (canvas == NULL) {
         return NULL;
     }
-    canvas->backBuffer = veCreateFramebuffer(width, height);
+    canvas->backBuffer = veFramebufferCreate(&veDefaultFramebufferBackend, width, height);
     if (canvas->backBuffer == NULL) {
         veDestroyCanvas(canvas);
         return NULL;
     }
     canvas->frontBuffer
-        = veCreateFramebuffer(width, height);
+        = veFramebufferCreate(&veDefaultFramebufferBackend, width, height);
     if (canvas->frontBuffer == NULL) {
         veDestroyCanvas(canvas);
         return NULL;
@@ -34,11 +34,11 @@ void veDestroyCanvas(struct VeCanvas* canvas)
         return;
     }
     if (canvas->frontBuffer != NULL) {
-        veDestroyFramebuffer(canvas->frontBuffer);
+        veFramebufferDestroy(canvas->frontBuffer);
         canvas->frontBuffer = NULL;
     }
     if (canvas->backBuffer != NULL) {
-        veDestroyFramebuffer(canvas->backBuffer);
+        veFramebufferDestroy(canvas->backBuffer);
         canvas->backBuffer = NULL;
     }
     free(canvas);
@@ -52,7 +52,7 @@ void veStageCharacter(const struct VeCanvas* canvas,
         return;
     }
     struct VeCell* cell
-        = veGetFramebufferCell(canvas->backBuffer, x, y);
+        = veFramebufferGetCell(canvas->backBuffer, x, y);
     if (cell == NULL) {
         return;
     }
