@@ -1,3 +1,14 @@
+/**
+* \file canvas.c
+ *
+ * \brief Vellum canvas implemenation.
+ *
+ * \see vellum/canvas.h
+ *
+ * \copyright 2026 H Paterson (Alicorn Software).
+ * \license BSL-1.0
+ */
+
 #include "vellum/canvas.h"
 
 #include <stdlib.h>

@@ -1,3 +1,12 @@
+/**
+* \file colour.h
+ *
+ * \brief Vellum colour API.
+ *
+ * \copyright 2026 H Paterson (Alicorn Software).
+ * \license BSL-1.0
+ */
+
 #ifndef VELLUM_VE_COLOUR_H
 #define VELLUM_VE_COLOUR_H
 

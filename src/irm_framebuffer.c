@@ -11,6 +11,11 @@
  * The IRM framebuffer is a relatively naive, unoptimized
  * implementation intended for use as a benchmarking and
  * behaviour-testing baseline.
+ *
+ * \see vellum/framebuffer.h
+ *
+ * \copyright 2026 H Paterson (Alicorn Software).
+ * \license BSL-1.0
  */
 
 #include <stdbool.h>
