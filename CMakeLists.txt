@@ -4,12 +4,14 @@ project(vellum C)
 set(CMAKE_C_STANDARD 17)
 
 add_library(vellum STATIC
-        ve_colour.h
-        ve_cell.h
-        ve_char.h
-        ve_irm_framebuffer.c
-        ve_canvas.h
-        ve_style.h
-        canvas.c
-        ve_framebuffer.h)
+        include/vellum/colour.h
+        include/vellum/cell.h
+        include/vellum/char.h
+        src/irm_framebuffer.c
+        include/vellum/canvas.h
+        include/vellum/style.h
+        src/canvas.c
+        include/vellum/framebuffer.h)
+target_include_directories(vellum PUBLIC include)
 target_compile_features(vellum PUBLIC c_std_17)
+

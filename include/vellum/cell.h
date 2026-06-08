@@ -1,8 +1,8 @@
 #ifndef VELLUM_VE_CELL_H
 #define VELLUM_VE_CELL_H
 
-#include "ve_char.h"
-#include "ve_style.h"
+#include "vellum/char.h"
+#include "vellum/style.h"
 
 /**
  * \brief Vellum representation of a single cell of console

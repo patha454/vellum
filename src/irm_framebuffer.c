@@ -1,5 +1,5 @@
 /**
- * \file ve_irm_framebuffer.c
+ * \file irm_framebuffer.c
  *
  * \brief Interleaved, row-major (IRM) framebuffer
  * implementation.
@@ -16,7 +16,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "ve_framebuffer.h"
+#include "../include/vellum/framebuffer.h"
 
 struct VeIRMFramebuffer {
     const struct VeFramebufferBackend* backend;

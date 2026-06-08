@@ -1,7 +1,7 @@
 #ifndef VELLUM_VE_STYLE_H
 #define VELLUM_VE_STYLE_H
 
-#include "ve_colour.h"
+#include "vellum/colour.h"
 
 /**
  * \breuf Rules dictating cells' (characters') appearance.

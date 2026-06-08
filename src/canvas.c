@@ -1,4 +1,4 @@
-#include "ve_canvas.h"
+#include "vellum/canvas.h"
 
 #include <stdlib.h>
 

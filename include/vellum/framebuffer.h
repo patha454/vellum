@@ -2,7 +2,7 @@
 #ifndef VELLUM_VE_FRAMEBUFFER_H
 #define VELLUM_VE_FRAMEBUFFER_H
 
-#include "ve_cell.h"
+#include "vellum/cell.h"
 #include <stddef.h>
 
 /**

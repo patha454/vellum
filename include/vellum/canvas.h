@@ -1,7 +1,7 @@
 #ifndef VELLUM_VE_CANVAS_H
 #define VELLUM_VE_CANVAS_H
 
-#include "ve_framebuffer.h"
+#include "vellum/framebuffer.h"
 #include <stdio.h>
 
 /**
