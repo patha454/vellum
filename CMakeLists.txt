@@ -10,5 +10,6 @@ add_library(vellum STATIC vellum.c
         ve_framebuffer.h
         framebuffer.c
         ve_canvas.h
-        ve_style.h)
+        ve_style.h
+        canvas.c)
 target_compile_features(vellum PUBLIC c_std_17)

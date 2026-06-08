@@ -64,7 +64,10 @@ void veDestroyFramebuffer(struct VeFramebuffer* framebuffer)
     }
     framebuffer->width = 0;
     framebuffer->height = 0;
-    free(framebuffer->cells);
+    if (framebuffer->cells != NULL) {
+        free(framebuffer->cells);
+        framebuffer->cells = NULL;
+    }
     free(framebuffer);
 }
 

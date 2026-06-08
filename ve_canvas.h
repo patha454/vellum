@@ -13,6 +13,9 @@ struct VeCanvas {
 
     /** Buffer containing the previous frame displayed. */
     struct VeFramebuffer* frontBuffer;
+
+    /** Stream where the canvas will render. */
+    FILE* output;
 };
 
 /**
@@ -49,7 +52,7 @@ void veDestroyCanvas(struct VeCanvas* canvas);
  *
  * @param canvas Canvas to render.
  */
-void veDisplayCanvas(struct VeCanvas* canvas);
+void veDisplayCanvas(const struct VeCanvas* canvas);
 
 /**
  * \brief Stage a character for rendering on the canvas.
@@ -63,7 +66,7 @@ void veDisplayCanvas(struct VeCanvas* canvas);
  * @param y Y coordinate of the character.
  * @param style Style to apply to the character.
  */
-void veStageCharacter(struct VeCanvas* canvas,
+void veStageCharacter(const struct VeCanvas* canvas,
     ve_char_t character, size_t x, size_t y,
     struct VeStyle style);
 
