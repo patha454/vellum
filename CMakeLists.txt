@@ -3,7 +3,7 @@ project(vellum C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_library(vellum STATIC vellum.c
+add_library(vellum STATIC
         ve_colour.h
         ve_cell.h
         ve_char.h
