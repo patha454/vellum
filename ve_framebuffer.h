@@ -1,43 +1,54 @@
+
 #ifndef VELLUM_VE_FRAMEBUFFER_H
 #define VELLUM_VE_FRAMEBUFFER_H
 
+#include "ve_cell.h"
 #include <stddef.h>
 
-#include "ve_cell.h"
+struct VeFramebuffer {
+    /**
+     * Interface to an implementation of a framebuffer.
+     */
+    const struct VeFramebufferFunctions* const vtable;
+};
 
 /**
- * \brief Grid of "cells" which forms Vellum's framebuffer.
+ * \brief Allocate and initialize a new Vellum framebuffer.
  *
- * Each cell in the framebuffer is a single character (or
- * empty space) in the terminal.
+ * Create a mew framebuffer implementation by allocating
+ * and initializing all required resources.
  *
- * \internal
- * Vellum stores cells column-major order. Vellum's
- * implementation is expected to move to Z-order as an
- * optimization once an initial implementation is complete.
+ * \param width Width of the new framebuffer, in cells.
+ * \param height Height of the new framebuffer, in cells.
+ *
+ * \note Creating a framebuffer with the width or height
+ * set to zero is invalid and will return null.
+ *
+ * \return Newly allocated framebuffer, or null if
+ * allocation failed.
  */
-struct VeFramebuffer {
-    /** Width of the framebuffer, in cells. */
-    size_t width;
+typedef struct VeFramebuffer* (*ve_framebuffer_create_t)(
+    size_t width, size_t height);
 
-    /** Height of the framebuffer, in cells. */
-    size_t height;
-
-    /**
-     * Framebuffer contents.
-     *
-     * The framebuffer is a 2-dimensional array of cells (
-     * width * height cells total.)
-     */
-    struct VeCell* cells;
-};
+/**
+ * \brief Destroy and deallocated a Vellum framebuffer.
+ *
+ * Destroy a framebuffer implementation by freeing and
+ * deallocating the resources it holds.
+ *
+ * \param framebuffer Framebuffer to be deallocated. No
+ * action is taken if the framebuffer is null.
+ */
+typedef void (*ve_framebuffer_destroy_t)(
+    struct VeFramebuffer* framebuffer);
 
 /**
  * \brief Access a framebuffer cell.
  *
- * Framebuffer cells are accessed via zero-indexed
- * coordinates, where the x-axis increases from left to
- * right and the y-axis increases from top to bottom.
+ * Framebuffer implementations' cells are accessed via
+ * zero-indexed coordinates, where the x-axis increases
+ * from left to right and the y-axis increases from top to
+ * bottom.
  *
  * \note The memory layout of cells within the framebuffer
  * is defined in \ref VeFramebuffer.
@@ -50,38 +61,31 @@ struct VeFramebuffer {
  *   - The coordinates are out of range.
  *   - The framebuffer is null or invalid.
  */
-struct VeCell* veGetFramebufferCell(
+typedef struct VeCell* (*ve_framebuffer_get_cell_t)(
     const struct VeFramebuffer* framebuffer, size_t x,
     size_t y);
 
-/**
- * \brief Allocate and initialize a new Vellum framebuffer.
- *
- * Create a mew framebuffer by allocating and initializing
- * all required resources.
- *
- * \param width Width of the new framebuffer, in cells.
- * \param height Height of the new framebuffer, in cells.
- *
- * \note Creating a framebuffer with the width or height
- * set to zero is invalid and will return null.
- *
- * \return Newly allocated framebuffer, or null if
- * allocation failed.
- */
-struct VeFramebuffer* veCreateFramebuffer(
-    size_t width, size_t height);
+struct VeFramebufferFunctions {
+    /**
+     * Create a new instance of a framebuffer
+     * implementation.
+     */
+    ve_framebuffer_create_t create;
 
-/**
- * \brief Destroy and deallocated a Vellum framebuffer.
- *
- * Destroy a framebuffer by freeing and deallocating the
- * resources it holds.
- *
- * \param framebuffer Framebuffer to be deallocated. No
- * action is taken if the framebuffer is null.
- */
-void veDestroyFramebuffer(
-    struct VeFramebuffer* framebuffer);
+    /**
+     * Destroy a disused instance of a framebuffer
+     * implementation.
+     */
+    ve_framebuffer_destroy_t destroy;
+
+    /**
+     * Access details of a single cell in a framebuffer
+     * implementation.
+     */
+    ve_framebuffer_get_cell_t get_cell;
+};
+
+extern const struct VeFramebufferFunctions
+    veDefaultFramebufferFunctions;
 
 #endif // VELLUM_VE_FRAMEBUFFER_H

@@ -3,6 +3,13 @@
 
 #include "ve_framebuffer.h"
 
+struct VeDefaultFramebuffer {
+    const struct VeFramebufferFunctions* vtable;
+    size_t width;
+    size_t height;
+    struct VeCell* cells;
+};
+
 /**
  * Check if a framebuffer size will cause memory errors.
  *
@@ -40,8 +47,8 @@ struct VeFramebuffer* veCreateFramebuffer(
     if (isSizeUnsafe(width, height)) {
         return NULL;
     }
-    struct VeFramebuffer* framebuffer
-        = malloc(sizeof(struct VeFramebuffer));
+    struct VeDefaultFramebuffer* framebuffer
+        = calloc(1, sizeof(struct VeDefaultFramebuffer));
     if (framebuffer == NULL) {
         return NULL;
     }
@@ -51,10 +58,11 @@ struct VeFramebuffer* veCreateFramebuffer(
         free(framebuffer);
         return NULL;
     }
+    framebuffer->vtable = &veDefaultFramebufferFunctions;
     framebuffer->width = width;
     framebuffer->height = height;
     framebuffer->cells = cells;
-    return framebuffer;
+    return (struct VeFramebuffer*)framebuffer;
 }
 
 void veDestroyFramebuffer(struct VeFramebuffer* framebuffer)
@@ -62,11 +70,13 @@ void veDestroyFramebuffer(struct VeFramebuffer* framebuffer)
     if (framebuffer == NULL) {
         return;
     }
-    framebuffer->width = 0;
-    framebuffer->height = 0;
-    if (framebuffer->cells != NULL) {
-        free(framebuffer->cells);
-        framebuffer->cells = NULL;
+    struct VeDefaultFramebuffer* fb
+        = (struct VeDefaultFramebuffer*)framebuffer;
+    fb->width = 0;
+    fb->height = 0;
+    if (fb->cells != NULL) {
+        free(fb->cells);
+        fb->cells = NULL;
     }
     free(framebuffer);
 }
@@ -78,9 +88,17 @@ struct VeCell* veGetFramebufferCell(
     if (framebuffer == NULL) {
         return NULL;
     }
-    if (x >= framebuffer->width
-        || y >= framebuffer->height) {
+    struct VeDefaultFramebuffer* fb
+        = (struct VeDefaultFramebuffer*)framebuffer;
+    if (x >= fb->width || y >= fb->height) {
         return NULL;
     }
-    return &framebuffer->cells[y + x * framebuffer->height];
+    return &fb->cells[y + x * fb->height];
 }
+
+const struct VeFramebufferFunctions
+    veDefaultFramebufferFunctions = {
+        .create = veCreateFramebuffer,
+        .destroy = veDestroyFramebuffer,
+        .get_cell = veGetFramebufferCell,
+    };
