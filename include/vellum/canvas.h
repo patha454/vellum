@@ -75,7 +75,7 @@ void veDisplayCanvas(const struct VeCanvas* canvas);
  * @param y Y coordinate of the character.
  * @param style Style to apply to the character.
  */
-void veStageCharacter(const struct VeCanvas* canvas,
+void veStageCharacter(struct VeCanvas* canvas,
     ve_char_t character, size_t x, size_t y,
     struct VeStyle style);
 

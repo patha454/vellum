@@ -58,7 +58,7 @@ void veDestroyCanvas(struct VeCanvas* canvas)
     free(canvas);
 }
 
-void veStageCharacter(const struct VeCanvas* canvas,
+void veStageCharacter(struct VeCanvas* canvas,
     const ve_char_t character, const size_t x,
     const size_t y, const struct VeStyle style)
 {
