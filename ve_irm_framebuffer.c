@@ -1,9 +1,24 @@
+/**
+ * \file ve_irm_framebuffer.c
+ *
+ * \brief Interleaved, row-major (IRM) framebuffer
+ * implementation.
+ *
+ * The IRM framebuffer stores cells in a single array. Each
+ * array member contains the full style data and character
+ * rendered in a cell.
+ *
+ * The IRM framebuffer is a relatively naive, unoptimized
+ * implementation intended for use as a benchmarking and
+ * behaviour-testing baseline.
+ */
+
 #include <stdbool.h>
 #include <stdlib.h>
 
 #include "ve_framebuffer.h"
 
-struct VeDefaultFramebuffer {
+struct VeIRMFramebuffer {
     const struct VeFramebufferBackend* backend;
     size_t width;
     size_t height;
@@ -41,15 +56,15 @@ static bool isSizeUnsafe(
     return false;
 }
 
-struct VeFramebuffer* veCreateDefaultFramebuffer(
+struct VeFramebuffer* veCreateIRMFramebuffer(
     const struct VeFramebufferBackend* backend,
     const size_t width, const size_t height)
 {
     if (isSizeUnsafe(width, height)) {
         return NULL;
     }
-    struct VeDefaultFramebuffer* framebuffer
-        = calloc(1, sizeof(struct VeDefaultFramebuffer));
+    struct VeIRMFramebuffer* framebuffer
+        = calloc(1, sizeof(struct VeIRMFramebuffer));
     if (framebuffer == NULL) {
         return NULL;
     }
@@ -66,14 +81,14 @@ struct VeFramebuffer* veCreateDefaultFramebuffer(
     return (struct VeFramebuffer*)framebuffer;
 }
 
-void veDestroyDefaultFramebuffer(
+void veDestroyIRMFramebuffer(
     struct VeFramebuffer* framebuffer)
 {
     if (framebuffer == NULL) {
         return;
     }
-    struct VeDefaultFramebuffer* fb
-        = (struct VeDefaultFramebuffer*)framebuffer;
+    struct VeIRMFramebuffer* fb
+        = (struct VeIRMFramebuffer*)framebuffer;
     fb->width = 0;
     fb->height = 0;
     if (fb->cells != NULL) {
@@ -83,15 +98,15 @@ void veDestroyDefaultFramebuffer(
     free(framebuffer);
 }
 
-struct VeCell* veGetDefaultFramebufferCell(
+struct VeCell* veGetIRMFramebufferCell(
     const struct VeFramebuffer* framebuffer, const size_t x,
     const size_t y)
 {
     if (framebuffer == NULL) {
         return NULL;
     }
-    struct VeDefaultFramebuffer* fb
-        = (struct VeDefaultFramebuffer*)framebuffer;
+    struct VeIRMFramebuffer* fb
+        = (struct VeIRMFramebuffer*)framebuffer;
     if (x >= fb->width || y >= fb->height) {
         return NULL;
     }
@@ -99,8 +114,8 @@ struct VeCell* veGetDefaultFramebufferCell(
 }
 
 const struct VeFramebufferBackend
-    veDefaultFramebufferBackend = {
-        .create = veCreateDefaultFramebuffer,
-        .destroy = veDestroyDefaultFramebuffer,
-        .get_cell = veGetDefaultFramebufferCell,
+    VE_INTERLEAVED_ROW_MAJOR_FRAMEBUFFER = {
+        .create = veCreateIRMFramebuffer,
+        .destroy = veDestroyIRMFramebuffer,
+        .get_cell = veGetIRMFramebufferCell,
     };

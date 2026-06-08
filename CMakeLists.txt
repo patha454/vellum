@@ -7,7 +7,7 @@ add_library(vellum STATIC vellum.c
         ve_colour.h
         ve_cell.h
         ve_char.h
-        framebuffer.c
+        ve_irm_framebuffer.c
         ve_canvas.h
         ve_style.h
         canvas.c

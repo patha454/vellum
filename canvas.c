@@ -13,13 +13,16 @@ struct VeCanvas* veCreateCanvas(
     if (canvas == NULL) {
         return NULL;
     }
-    canvas->backBuffer = veFramebufferCreate(&veDefaultFramebufferBackend, width, height);
+    canvas->backBuffer = veFramebufferCreate(
+        &VE_INTERLEAVED_ROW_MAJOR_FRAMEBUFFER, width,
+        height);
     if (canvas->backBuffer == NULL) {
         veDestroyCanvas(canvas);
         return NULL;
     }
-    canvas->frontBuffer
-        = veFramebufferCreate(&veDefaultFramebufferBackend, width, height);
+    canvas->frontBuffer = veFramebufferCreate(
+        &VE_INTERLEAVED_ROW_MAJOR_FRAMEBUFFER, width,
+        height);
     if (canvas->frontBuffer == NULL) {
         veDestroyCanvas(canvas);
         return NULL;

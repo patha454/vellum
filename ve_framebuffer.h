@@ -124,8 +124,20 @@ struct VeFramebufferBackend {
     ve_framebuffer_get_cell_t get_cell;
 };
 
+/**
+ * \brief Interleaved, row-major (IRM) framebuffer
+ * implementation.
+ *
+ * The IRM framebuffer stores cells in a single array. Each
+ * array member contains the full style data and character
+ * rendered in a cell.
+ *
+ * \note The IRM framebuffer is a relatively naive,
+ * unoptimized implementation intended for use as a
+ * benchmarking and behaviour-testing baseline.
+ */
 extern const struct VeFramebufferBackend
-    veDefaultFramebufferBackend;
+    VE_INTERLEAVED_ROW_MAJOR_FRAMEBUFFER;
 
 /**
  * \brief Create a new framebuffer implementation by
